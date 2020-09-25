@@ -1,7 +1,7 @@
 #!/bin/bash
 
-compiler="gcc"
-#compiler="clang"
+#compiler="gcc"
+compiler="clang"
 
 NTHREADS="8"
 
@@ -30,7 +30,7 @@ CLANG_FLAGS="-O3 -march=native -mtune=native"
 #clang+lto fails (even on clang 10)
 #CLANG_FLAGS="${CLANG_FLAGS} -flto=thin"
 #polly (see: https://forums.gentoo.org/viewtopic-t-1114740-start-0.html)
-#CLANG_FLAGS="${CLANG_FLAGS} -mllvm -polly"
+CLANG_FLAGS="${CLANG_FLAGS} -mllvm -polly"
 CLANG_AR=llvm-ar
 CLANG_NM=llvm-nm
 
@@ -42,20 +42,22 @@ if [ ${compiler} == "clang" ]; then
 	FLAGS="${CLANG_FLAGS}"
 	NM="${CLANG_NM}"
 	AR="${CLANG_AR}"
+	LLVM_OPT="1"
 elif [ ${compiler} == "gcc" ]; then
 	CC="${GCC_CC}"
 	CXX="${GCC_CXX}"
 	FLAGS="${GCC_FLAGS}"
        	NM="${GCC_NM}"
        	AR="${GCC_AR}"
+	LLVM_OPT="0"
 fi
 
 
-time make NM="${NM}" AR="${AR}" LD="${LD}" HOSTCC="${CC}" CC="${CC}" CXX="${CXX}" KCFLAGS="${FLAGS}" KCXXFLAGS="${FLAGS}" KLDFLAGS="${FLAGS}" -j"${NTHREADS}" menuconfig
-time make NM="${NM}" AR="${AR}" LD="${LD}" HOSTCC="${CC}" CC="${CC}" CXX="${CXX}" KCFLAGS="${FLAGS}" KCXXFLAGS="${FLAGS}" KLDFLAGS="${FLAGS}" -j"${NTHREADS}"
-time make NM="${NM}" AR="${AR}" LD="${LD}" HOSTCC="${CC}" CC="${CC}" CXX="${CXX}" KCFLAGS="${FLAGS}" KCXXFLAGS="${FLAGS}" KLDFLAGS="${FLAGS}" -j"${NTHREADS}" modules
+time make LLVM="${LLVM_OPT}" NM="${NM}" AR="${AR}" LD="${LD}" HOSTCC="${CC}" CC="${CC}" CXX="${CXX}" KCFLAGS="${FLAGS}" KCXXFLAGS="${FLAGS}" KLDFLAGS="${FLAGS}" -j"${NTHREADS}" menuconfig
+time make LLVM="${LLVM_OPT}" NM="${NM}" AR="${AR}" LD="${LD}" HOSTCC="${CC}" CC="${CC}" CXX="${CXX}" KCFLAGS="${FLAGS}" KCXXFLAGS="${FLAGS}" KLDFLAGS="${FLAGS}" -j"${NTHREADS}"
+time make LLVM="${LLVM_OPT}" NM="${NM}" AR="${AR}" LD="${LD}" HOSTCC="${CC}" CC="${CC}" CXX="${CXX}" KCFLAGS="${FLAGS}" KCXXFLAGS="${FLAGS}" KLDFLAGS="${FLAGS}" -j"${NTHREADS}" modules
 
 
-time make NM="${NM}" AR="${AR}" LD="${LD}" HOSTCC="${CC}" CC="${CC}" CXX="${CXX}" KCFLAGS="${FLAGS}" KCXXFLAGS="${FLAGS}" KLDFLAGS="${FLAGS}" -j"${NTHREADS}" modules_install
+time make LLVM="${LLVM_OPT}" NM="${NM}" AR="${AR}" LD="${LD}" HOSTCC="${CC}" CC="${CC}" CXX="${CXX}" KCFLAGS="${FLAGS}" KCXXFLAGS="${FLAGS}" KLDFLAGS="${FLAGS}" -j"${NTHREADS}" modules_install
 
-time make NM="${NM}" AR="${AR}" LD="${LD}" HOSTCC="${CC}" CC="${CC}" CXX="${CXX}" KCFLAGS="${FLAGS}" KCXXFLAGS="${FLAGS}" KLDFLAGS="${FLAGS}" -j"${NTHREADS}" install
+time make LLVM="${LLVM_OPT}" NM="${NM}" AR="${AR}" LD="${LD}" HOSTCC="${CC}" CC="${CC}" CXX="${CXX}" KCFLAGS="${FLAGS}" KCXXFLAGS="${FLAGS}" KLDFLAGS="${FLAGS}" -j"${NTHREADS}" install
