@@ -2,11 +2,9 @@
 
 bak_dir="/usr/src/build"
 
-lqx_dir="/usr/src/linux-5.8.12-pf2"
+lqx_dir="/usr/src/linux-5.8.13-pf1"
 pf_dir="/usr/src/linux-5.8_p6-pf"
-xanmod_dir="/usr/src/linux-5.8.12-xanmod"
-zen_dir="/usr/src/linux-5.8.12-zen"
-git_dir="/usr/src/linux-5.9-rc7"
+zen_dir="/usr/src/linux-5.8.13-zen"
 
 echo "backing up lqx config..."
 if [ -d ${lqx_dir} ]; then
@@ -24,13 +22,6 @@ else
 fi
 
 
-echo "backing up xanmod config..."
-if [ -d ${xanmod_dir} ]; then
-   cat ${xanmod_dir}/.config > ${bak_dir}/config_xanmod
-else
-   echo "xanmod dir not found, skipping..."
-fi
-
 echo "backing up zen config..."
 if [ -d ${zen_dir} ]; then
    cat ${zen_dir}/.config > ${bak_dir}/config_zen
@@ -38,9 +29,3 @@ else
    echo "zen dir not found, skipping..."
 fi
 
-echo "backing up git config..."
-if [ -d ${git_dir} ]; then
-   cat ${git_dir}/.config > ${bak_dir}/config_git
-else
-   echo "git dir not found, skipping..."
-fi
