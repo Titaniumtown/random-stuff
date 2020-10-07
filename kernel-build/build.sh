@@ -14,8 +14,6 @@ GCC_FLAGS="-O3 -march=native -mtune=native"
 GCC_FLAGS="${GCC_FLAGS} -falign-functions=32 -fipa-pta -fno-semantic-interposition -fgraphite-identity -floop-nest-optimize -ffat-lto-objects"
 #lto
 GCC_FLAGS="${GCC_FLAGS} -flto=${NTHREADS}"
-#safe fast math
-GCC_FLAGS="${GCC_FLAGS} -fno-math-errno -fno-trapping-math -fdevirtualize-at-ltrans"
 GCC_AR=gcc-ar
 GCC_NM=gcc-nm
 
@@ -25,12 +23,13 @@ GCC_NM=gcc-nm
 CLANG_CC="clang"
 CLANG_CXX="clang++"
 
+# Note: do NOT add flto flags if you want to build your kernel with clang+lto (gcc+lto works fine)
+# wait for https://lore.kernel.org/lkml/20200903203053.3411268-1-samitolvanen@google.com/T/#md401d7ab107d42b9615d15c49ec21acebabae310
+# to be merged, then you can configure it in: "General architecture-dependent options" > "Link Time Optimization (LTO)..."
 #basic O3 and native
 CLANG_FLAGS="-O3 -march=native -mtune=native"
-#clang+lto fails (even on clang 10)
-#CLANG_FLAGS="${CLANG_FLAGS} -flto=thin"
 #polly (see: https://forums.gentoo.org/viewtopic-t-1114740-start-0.html)
-#CLANG_FLAGS="${CLANG_FLAGS} -mllvm -polly"
+CLANG_FLAGS="${CLANG_FLAGS} -mllvm -polly"
 CLANG_AR=llvm-ar
 CLANG_NM=llvm-nm
 
