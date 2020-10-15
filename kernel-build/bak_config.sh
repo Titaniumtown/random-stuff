@@ -2,7 +2,7 @@
 
 bak_dir="/usr/src/build"
 
-lqx_dir="/usr/src/linux-5.8.14-liquorix"
+lqx_dir="/usr/src/linux-5.8.15-liquorix"
 linux_clang_lto_dir="/usr/src/linux-clang-lto"
 
 echo "backing up lqx config..."
