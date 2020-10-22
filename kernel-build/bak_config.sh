@@ -2,8 +2,8 @@
 
 bak_dir="/usr/src/build"
 
-lqx_dir="/usr/src/linux-5.8.15-liquorix"
-linux_clang_lto_dir="/usr/src/linux-clang-lto"
+lqx_dir="/usr/src/linux-5.8.16-pf1"
+pf_dir="/usr/src/linux-5.9_p1-pf"
 
 echo "backing up lqx config..."
 if [ -d ${lqx_dir} ]; then
@@ -16,13 +16,13 @@ else
    echo "lqx dir not found, skipping..."
 fi
 
-echo "backing up linux-clang-lto config..."
-if [ -d ${linux_clang_lto_dir} ]; then
-   if [ -f "${linux_clang_lto_dir}/.config" ]; then
-      cat ${linux_clang_lto_dir}/.config > ${bak_dir}/config_linux_clang_lto
+echo "backing up pf config..."
+if [ -d ${pf_dir_dir} ]; then
+   if [ -f "${pf_dir}/.config" ]; then
+      cat ${pf_dir}/.config > ${bak_dir}/config_pf
    else
-      echo "linux-clang-lto config not found, skipping..."
+      echo "pf config not found, skipping..."
    fi
 else
-   echo "linux-clang-lto dir not found, skipping..."
+   echo "pf dir not found, skipping..."
 fi
