@@ -14,6 +14,8 @@ GCC_FLAGS="-O3 -march=native -mtune=native"
 GCC_FLAGS="${GCC_FLAGS} -falign-functions=32 -fipa-pta -fno-semantic-interposition -fgraphite-identity -floop-nest-optimize -ffat-lto-objects"
 #lto
 GCC_FLAGS="${GCC_FLAGS} -flto=${NTHREADS}"
+#misc
+GCC_FLAGS="${GCC_FLAGS} -flto-compression-level=9 -fuse-linker-plugin -ftree-vectorize -fira-region=mixed -fira-algorithm=CB -fira-hoist-pressure -fira-loop-pressure"
 GCC_AR=gcc-ar
 GCC_NM=gcc-nm
 
